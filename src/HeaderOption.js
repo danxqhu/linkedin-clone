@@ -6,14 +6,31 @@ import './HeaderOption.css';
 
 function HeaderOption({ avatar, Icon, title, onClick }) {
   const user = useSelector(selectUser);
+  // console.log(user);
+  function Ava() {
+    if (avatar) {
+      if (user && user.displayName) {
+        return (
+          <Avatar className="headerOption__icon" src={user.photoURL}>
+            {user.displayName[0]}
+          </Avatar>
+        );
+      } else {
+        return <Avatar className="headerOption__icon"></Avatar>;
+      }
+    }
+  }
+
   return (
     <div onClick={onClick} className="headerOption">
       {Icon && <Icon className="headerOption__icon" />}
-      {avatar && (
-        <Avatar className="headerOption__icon" src={user?.photoUrl}>
-          {user?.email[0]}
+
+      <Ava></Ava>
+      {/* {avatar && user && user.displayName && (
+        <Avatar className="headerOption__icon" src={user.photoURL}>
+          {user.displayName[0]}
         </Avatar>
-      )}
+      )} */}
       <h3 className="headerOption__title">{title}</h3>
     </div>
   );

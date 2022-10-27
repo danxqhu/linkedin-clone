@@ -6,7 +6,7 @@ import { selectUser } from './features/userSlice';
 
 function Sidebar() {
   const user = useSelector(selectUser);
-
+  // console.log('user:', user);
   const recentItem = topic => (
     <div className="sidebar__recentItem">
       <span className="sidebar__hash">#</span>
@@ -20,9 +20,14 @@ function Sidebar() {
           src="https://images.unsplash.com/photo-1499382926300-90a93d2d9990?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHx8&w=1000&q=80"
           alt=""
         />
-        <Avatar src={user.photoUrl} className="sidebar__avatar">
-          {user.email[0]}
-        </Avatar>
+        {/* {user.photoURL ? <h2>yes</h2> : <h2>no{console.log(user)}</h2>} */}
+
+        {user && user.displayName && (
+          <Avatar src={user.photoURL} className="sidebar__avatar">
+            {user.displayName[0]}
+          </Avatar>
+        )}
+
         <h2>{user.displayName}</h2>
         <h4>{user.email}</h4>
       </div>

@@ -8,6 +8,7 @@ import Login from './Login';
 import Widgets from './Widgets';
 import { logout, login, selectUser } from './features/userSlice';
 import { auth } from './firebase';
+import BackDrop from './BackDrop';
 
 function App() {
   const user = useSelector(selectUser);
@@ -35,6 +36,7 @@ function App() {
   return (
     <div className="app">
       <Header></Header>
+      <BackDrop></BackDrop>
 
       {!user ? (
         <Login />

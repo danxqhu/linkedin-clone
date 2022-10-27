@@ -4,26 +4,34 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import './Login.css';
 import { login } from './features/userSlice';
+import { handleToggle } from './features/openSlice';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [profilePic, setProfilePic] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
   const dispatch = useDispatch();
 
   const loginToApp = e => {
     e.preventDefault();
+    dispatch(
+      handleToggle({
+        open: true,
+      }),
+    );
 
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userAuth => {
+        // console.log('userAuth:', userAuth);
+
         dispatch(
           login({
             email: userAuth.user.email,
             uid: userAuth.user.uid,
             displayName: userAuth.user.displayName,
-            profilePic: userAuth.user.photoURL,
+            photoURL: userAuth.user.photoURL,
           }),
         );
       })
@@ -41,7 +49,7 @@ function Login() {
         userAuth.user
           .updateProfile({
             displayName: name,
-            photoURL: profilePic,
+            photoURL: photoURL,
           })
           .then(() => {
             dispatch(
@@ -49,7 +57,7 @@ function Login() {
                 email: userAuth.user.email,
                 uid: userAuth.user.uid,
                 displayName: name,
-                photoURL: profilePic,
+                photoURL: photoURL,
               }),
             );
           });
@@ -67,9 +75,9 @@ function Login() {
         <input
           type="text"
           placeholder="Profile pic URL (optional)"
-          value={profilePic}
+          value={photoURL}
           onChange={e => {
-            setProfilePic(e.target.value);
+            setPhotoURL(e.target.value);
           }}
         />
 
