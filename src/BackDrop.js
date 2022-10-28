@@ -7,7 +7,6 @@ import { selectOpen } from './features/openSlice';
 
 function BackDrop() {
   const open = useSelector(selectOpen);
-  console.log(open);
   return (
     <div>
       {/* <Button onClick={handleToggle}>Show backdrop</Button> */}

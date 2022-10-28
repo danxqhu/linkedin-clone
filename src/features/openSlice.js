@@ -7,8 +7,7 @@ export const openSlice = createSlice({
   },
   reducers: {
     handleToggle: (state, action) => {
-      console.log('action:', action);
-      state.open = action.payload;
+      state.open = action.payload.open;
     },
     handleClose: state => {
       state.open = false;

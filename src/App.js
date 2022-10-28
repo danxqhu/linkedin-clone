@@ -9,10 +9,18 @@ import Widgets from './Widgets';
 import { logout, login, selectUser } from './features/userSlice';
 import { auth } from './firebase';
 import BackDrop from './BackDrop';
+// import { store } from './app/store';
+// import { handleClose } from './features/openSlice';
 
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
+  // store.subscribe(() => {
+  //   if (store.getState().user) {
+  //     dispatch(handleClose());
+  //   }
+  // });
 
   useEffect(() => {
     auth.onAuthStateChanged(userAuth => {

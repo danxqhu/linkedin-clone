@@ -4,7 +4,8 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import './Login.css';
 import { login } from './features/userSlice';
-import { handleToggle } from './features/openSlice';
+import { store } from './app/store';
+import { handleToggle, handleClose } from './features/openSlice';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -15,54 +16,104 @@ function Login() {
 
   const loginToApp = e => {
     e.preventDefault();
-    dispatch(
-      handleToggle({
-        open: true,
-      }),
-    );
 
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(userAuth => {
-        // console.log('userAuth:', userAuth);
+    if (!email) {
+      return alert('Please enter email');
+    } else if (!password) {
+      return alert('Please enter password');
+    } else {
+      dispatch(
+        handleToggle({
+          open: true,
+        }),
+      );
 
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-            displayName: userAuth.user.displayName,
-            photoURL: userAuth.user.photoURL,
-          }),
-        );
-      })
-      .catch(error => alert(error));
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then(userAuth => {
+          // console.log('userAuth:', userAuth);
+
+          dispatch(
+            login({
+              email: userAuth.user.email,
+              uid: userAuth.user.uid,
+              displayName: userAuth.user.displayName,
+              photoURL: userAuth.user.photoURL,
+            }),
+
+            // handleClose({
+            //   open: false,
+            // }),
+          );
+          dispatch(
+            handleClose({
+              open: false,
+            }),
+          );
+          // store.subscribe(() => {
+          //   if (store.getState().user) {
+          //     dispatch(handleClose());
+          //   }
+          // });
+        })
+        .catch(error => {
+          dispatch(
+            handleClose({
+              open: false,
+            }),
+          );
+          alert(error);
+        });
+    }
   };
 
   const register = () => {
     if (!name) {
       return alert('Please enter a full name');
-    }
+    } else if (!email) {
+      return alert('Please enter email');
+    } else if (!password) {
+      return alert('Please enter password');
+    } else {
+      dispatch(
+        handleToggle({
+          open: true,
+        }),
+      );
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(userAuth => {
-        userAuth.user
-          .updateProfile({
-            displayName: name,
-            photoURL: photoURL,
-          })
-          .then(() => {
-            dispatch(
-              login({
-                email: userAuth.user.email,
-                uid: userAuth.user.uid,
-                displayName: name,
-                photoURL: photoURL,
-              }),
-            );
-          });
-      })
-      .catch(error => alert(error));
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(userAuth => {
+          userAuth.user
+            .updateProfile({
+              displayName: name,
+              photoURL: photoURL,
+            })
+            .then(() => {
+              dispatch(
+                login({
+                  email: userAuth.user.email,
+                  uid: userAuth.user.uid,
+                  displayName: name,
+                  photoURL: photoURL,
+                }),
+              );
+              dispatch(
+                handleClose({
+                  open: false,
+                }),
+              );
+            });
+        })
+        .catch(error => {
+          alert(error);
+          dispatch(
+            handleClose({
+              open: false,
+            }),
+          );
+        });
+    }
   };
 
   return (
