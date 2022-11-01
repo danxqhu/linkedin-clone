@@ -4,7 +4,7 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import './Login.css';
 import { login } from './features/userSlice';
-import { store } from './app/store';
+// import { store } from './app/store';
 import { handleToggle, handleClose } from './features/openSlice';
 
 function Login() {
