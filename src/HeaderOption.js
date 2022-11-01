@@ -3,6 +3,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from './features/userSlice';
 import './HeaderOption.css';
+import PropTypes from 'prop-types';
+
+HeaderOption.propTypes = {
+  avatar: PropTypes.bool,
+  Icon: PropTypes.object,
+  title: PropTypes.string,
+  onClick: PropTypes.func,
+};
 
 function HeaderOption({ avatar, Icon, title, onClick }) {
   const user = useSelector(selectUser);
