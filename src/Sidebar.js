@@ -28,8 +28,8 @@ function Sidebar() {
           </Avatar>
         )}
 
-        <h2>{user.displayName}</h2>
-        <h4>{user.email}</h4>
+        <h2>{user?.displayName}</h2>
+        <h4>{user?.email}</h4>
       </div>
 
       <div className="sidebar__stats">

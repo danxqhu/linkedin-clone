@@ -6,6 +6,7 @@ import './Login.css';
 import { login } from './features/userSlice';
 // import { store } from './app/store';
 import { handleToggle, handleClose } from './features/openSlice';
+// import { useLocalStorage } from './hooks/useLocalStorage';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -40,21 +41,12 @@ function Login() {
               displayName: userAuth.user.displayName,
               photoURL: userAuth.user.photoURL,
             }),
-
-            // handleClose({
-            //   open: false,
-            // }),
           );
           dispatch(
             handleClose({
               open: false,
             }),
           );
-          // store.subscribe(() => {
-          //   if (store.getState().user) {
-          //     dispatch(handleClose());
-          //   }
-          // });
         })
         .catch(error => {
           dispatch(
@@ -115,6 +107,8 @@ function Login() {
         });
     }
   };
+
+  // useLocalStorage(() => {}, []);
 
   return (
     <div className="login">

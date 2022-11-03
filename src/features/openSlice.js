@@ -19,5 +19,6 @@ export const { handleToggle, handleClose } = openSlice.actions;
 
 // Selectors
 export const selectOpen = state => state.open.open;
+// export const selectOpen = state => state.open;
 
 export default openSlice.reducer;
